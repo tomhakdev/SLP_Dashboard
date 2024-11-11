@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SLP Dashboard</title>
+  <link rel="stylesheet" href="/css/styles.css">
+  <!-- Chart.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+  <div class="dashboard-container">
+    <!-- Sidebar for student selection -->
+    <div class="sidebar">
+        <div class="student-dropdown-container">
+            <select id="studentDropdown" class="student-dropdown" onchange="selectStudent(this.value)">
+                <option value="">--Select Student--</option>
+                <option value="Tom">Tom</option>
+                <option value="Simon">Simon</option>
+                <option value="Yingel">Yingel</option>
+            </select>
+
+            <h2 class="studentSettings">Student Settings</h2>
+
+            <select id="soundDropdown" class="sound-dropdown" onchange="assignSound(this.value)">
+                <option value="">--Select Sound--</option>
+                <option value="S">S</option>
+                <option value="R">R</option>
+                <option value="Th">Th</option>
+                <option value="L">L</option>
+            <!-- Add more words as needed -->
+            </select>
+            <p id="assignedSounds"></p>
+
+            <select id="syllablesDropdown" class="sound-dropdown" onchange="assignSyllable(this.value)">
+                <option value="">--Select Syllables--</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+            <!-- Add more words as needed -->
+            </select>
+            <p id="assignedSyllables"></p>
+
+
+            <select id="soundLocationDropdown" class="sound-dropdown" onchange="assignSoundLocation(this.value)">
+                <option value="">--Select Location--</option>
+                <option value="start">Start</option>
+                <option value="middle">Middle</option>
+                <option value="end">End</option>
+            <!-- Add more words as needed -->
+            </select>
+            <p id="assignedSoundLocaiton"></p>
+
+
+            <select id="wordDropdown" class="sound-dropdown" onchange="assignWord(this.value)">
+                <option value="">--Select Word--</option>
+                <option value="Seat">Seat</option>
+                <option value="word2">Seesaw</option>
+                <option value="word3">Secret</option>
+                <option value="word4">Seaking</option>
+            <!-- Add more words as needed -->
+            </select>
+            <p id="assignedWords"></p>
+
+        </div>
+    </div>
+
+    <!-- Main content area for statistics -->
+    <main class="content">
+        <h1 id="dashboardTitle">SLP Dashboard</h1>
+
+      <!-- Chart Grid -->
+      <div class="chart-grid">
+
+        <div class="chart-item">
+            <h2>Pronunciation Confidence Level</h2>
+            <canvas id="confidenceChart"></canvas>
+        </div>
+
+        <div class="chart-item">
+            <h2>Accuracy by Letter Combinations</h2>
+            <canvas id="letterCombinationChart"></canvas>
+        </div>
+        
+        <div class="chart-item">
+            <h2>Accuracy by Syllables</h2>
+            <canvas id="syllablesChart"></canvas>
+        </div>
+        
+        <div class="chart-item">
+            <h2>Accuracy by Sound Location</h2>
+            <canvas id="soundLocationChart"></canvas>
+        </div>
+        
+        <div class="chart-item">
+            <h2>Progress by Game Level</h2>
+            <canvas id="gameLevelChart"></canvas>
+        </div>
+
+        <div class="chart-item">
+            <h2>Minutes Practiced</h2>
+            <canvas id="minutesPracticedChart"></canvas>
+        </div>
+
+      </div>
+
+    </main>
+  </div>
+
+
+  <script src="/js/dashboard.js"></script>
+  <script src="/js/notes.js"></script>
+
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2"></script>
+
+</body>
+</html>
+
