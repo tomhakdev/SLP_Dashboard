@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>SLP Dashboard</title>
   <link rel="stylesheet" href="/css/styles.css">
+  <link rel="stylesheet" href="/css/sidebar.css">
   <!-- Chart.js CDN -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
@@ -19,53 +20,101 @@
                 <option value="Tom">Tom</option>
                 <option value="Simon">Simon</option>
                 <option value="Yingel">Yingel</option>
+                <option value="add">+</option>
             </select>
-
-            <h2 class="studentSettings">Student Settings</h2>
-
-            <select id="soundDropdown" class="sound-dropdown" onchange="assignSound(this.value)">
-                <option value="">--Select Sound--</option>
-                <option value="S">S</option>
-                <option value="R">R</option>
-                <option value="Th">Th</option>
-                <option value="L">L</option>
-            <!-- Add more words as needed -->
-            </select>
-            <p id="assignedSounds"></p>
-
-            <select id="syllablesDropdown" class="sound-dropdown" onchange="assignSyllable(this.value)">
-                <option value="">--Select Syllables--</option>
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-            <!-- Add more words as needed -->
-            </select>
-            <p id="assignedSyllables"></p>
+            <button id="cancelAddStudent" onclick="cancelAddStudent()" style="display: none;">Cancel</button>
+        </div>
+    
+        <div class="sidebar-content" style="display: none;">
+            <h2 class="studentSettings">Student Data
+                <span class="editIcon" onclick="toggleEdit('studentData')">✏️</span>
+            </h2>
+            <p class="studentSettings">ID: <span id="studentID" class="editableField studentData"></span></p>
+            <p class="studentSettings">Name: <span id="studentName" class="editableField studentData"></span></p>
+            <p class="studentSettings">Date of Birth: <span id="dob" class="editableField studentData"></span></p>
+            <p class="studentSettings">Gender: <span id="gender" class="editableField studentData"></span></p>
+    
+            <h2 class="studentSettings">Parental/Guardian Information
+                <span class="editIcon" onclick="toggleEdit('parentGuardianInfo')">✏️</span>
+            </h2>
+            <p class="studentSettings">Parent/Guardian Contact: <span id="parentContact" class="editableField parentGuardianInfo"></span></p>
+            <p class="studentSettings">Special Requests: <span id="specialRequests" class="editableField parentGuardianInfo"></span></p>
+    
 
 
-            <select id="soundLocationDropdown" class="sound-dropdown" onchange="assignSoundLocation(this.value)">
-                <option value="">--Select Location--</option>
-                <option value="start">Start</option>
-                <option value="middle">Middle</option>
-                <option value="end">End</option>
-            <!-- Add more words as needed -->
-            </select>
-            <p id="assignedSoundLocaiton"></p>
+            <h2 class="studentSettings">Modify Practice
+                <button id="savePracticeButton" class="save-button inactive" onclick="savePracticeChanges()" disabled>Save</button>
+            </h2>
 
 
-            <select id="wordDropdown" class="sound-dropdown" onchange="assignWord(this.value)">
-                <option value="">--Select Word--</option>
-                <option value="Seat">Seat</option>
-                <option value="word2">Seesaw</option>
-                <option value="word3">Secret</option>
-                <option value="word4">Seaking</option>
-            <!-- Add more words as needed -->
-            </select>
-            <p id="assignedWords"></p>
+            <div class="select-sound">
+                <label for="sound-options">Select Sound:</label>
+                <div id="sound-options" class="multi-select-menu">
+                  <label>
+                    <input type="checkbox" value="r" data-option="r" />
+                    r
+                  </label>
+                  <label>
+                    <input type="checkbox" value="s" data-option="s" />
+                    s
+                  </label>
+                  <label>
+                    <input type="checkbox" value="th" data-option="th" />
+                    th
+                  </label>
+                  <label>
+                    <input type="checkbox" value="l" data-option="l" />
+                    l
+                  </label>
+                  <label>
+                    <input type="checkbox" value="z" data-option="z" />
+                    z
+                  </label>
+                  <label>
+                    <input type="checkbox" value="sh" data-option="sh" />
+                    sh
+                  </label>
+                </div>
+              </div>
+
+
+              <div id="soundLocationContainer">
+                <label class="slider-title">Select Location Frequency:</label>
+                <div id="soundLocationSlider" class="multi-range-slider"></div>
+                <div id="soundLocationSummary" class="slider-summary">
+                    Beginning: 20%, Middle: 30%, End: 50%
+                </div>
+            </div>
+
+
+            <div id="syllableCountContainer">
+                <label class="slider-title">Select Syllable Count Frequency:</label>
+                <div id="syllableCountSlider" class="multi-range-slider"></div>
+                <div id="syllableCountSummary" class="slider-summary">
+                    1 Syllable: 33%, 2 Syllables: 33%, 3+ Syllables: 34%
+                </div>
+            </div>
+                
+
+                <label>Vowel Combination Distribution:</label>
+                <div id="vowelCombinationSlider" class="multi-slider">
+                    <!-- Dynamically generated sliders for each vowel -->
+                </div>
+                <div id="vowelSummary"></div> 
+
+
+
 
         </div>
+
+
+
+
+        <button id="deleteButton" onclick="confirmDeleteStudent()" style="display: none;" class="delete-button">Delete</button>
+    
+        <div class="resize-handle" id="resizeHandle"></div>
     </div>
+    
 
     <!-- Main content area for statistics -->
     <main class="content">
@@ -109,7 +158,7 @@
     </main>
   </div>
 
-
+  <script src="/js/sidebar.js"></script>
   <script src="/js/dashboard.js"></script>
   <script src="/js/notes.js"></script>
 

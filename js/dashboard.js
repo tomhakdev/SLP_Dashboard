@@ -1,4 +1,4 @@
-const studentData = {
+/*const studentData = {
     student1: { 
         accuracyTime: [70, 75, 80, 85], 
         letterCombination: { S: [90, 85, 70, 95], R: [80, 70, 75, 90] }, 
@@ -233,3 +233,4 @@ document.addEventListener("DOMContentLoaded", loadCharts);
 
 // Call loadCharts on page load
 window.onload = loadCharts;
+*/
