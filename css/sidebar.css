@@ -197,6 +197,49 @@ p.studentSettings{
     display: none; 
 }
 
+
+
+.target-words {
+    margin-top: 20px;
+  }
+  
+  #target-word-input {
+    width: 100%;
+    padding: 8px;
+    font-size: 1em;
+    margin-top: 8px;
+    box-sizing: border-box;
+  }
+  
+  #target-word-list {
+    margin-top: 10px;
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  #target-word-list li {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #f9f9f9;
+    padding: 5px 10px;
+    margin-bottom: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    color: black;
+  }
+  
+  #target-word-list li button {
+    background: none;
+    border: none;
+    color: red;
+    font-size: 1em;
+    cursor: pointer;
+  }
+
+
+
+
 .delete-button {
     width: 100%;
     padding: 10px;

@@ -635,6 +635,50 @@ function assignWord(value) {
 
 
 
+
+document.addEventListener("DOMContentLoaded", () => {
+    const input = document.getElementById("target-word-input");
+    const list = document.getElementById("target-word-list");
+    let targetWords = [];
+  
+    input.addEventListener("keydown", (event) => {
+      if (event.key === "Enter") {
+        event.preventDefault();
+        const word = input.value.trim();
+  
+        if (word && targetWords.length < 10 && !targetWords.includes(word)) {
+          targetWords.push(word);
+          addWordToList(word);
+          input.value = "";
+        } else if (targetWords.length >= 10) {
+          alert("Word Limit Reached");
+        }
+      }
+    });
+  
+    function addWordToList(word) {
+      const li = document.createElement("li");
+      li.textContent = word;
+  
+      const removeBtn = document.createElement("button");
+      removeBtn.textContent = "x";
+      removeBtn.addEventListener("click", () => {
+        targetWords = targetWords.filter((w) => w !== word);
+        list.removeChild(li);
+      });
+  
+      li.appendChild(removeBtn);
+      list.appendChild(li);
+    }
+  });
+
+
+
+
+
+
+
+
 function confirmDeleteStudent() {
     if (confirm("Are you sure you want to delete this student's data? After deletion, it can no longer be recovered.")) {
         const password = prompt("Please enter your password to confirm:");
