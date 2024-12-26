@@ -4,6 +4,7 @@ const studentData = {
         name: "Tom",
         dob: "2013-05-15",
         gender: "Male",
+        goals: "S/Z with correct air flow (lateral air flow)",
         parentContact: "John Doe, 123-456-7890",
         specialRequests: "Needs additional practice with speech sounds at the start of words.",
         selectedSounds: ["r", "s"],
@@ -18,6 +19,7 @@ const studentData = {
         name: "Simon",
         dob: "2015-08-20",
         gender: "Male",
+        goals: "K becomes T and T becomes G",
         parentContact: "Jane Smith, 987-654-3210",
         specialRequests: "Prefer visual aids during sessions.",
         selectedSounds: ["th"],
@@ -31,6 +33,7 @@ const studentData = {
         name: "Yingel",
         dob: "2016-12-10",
         gender: "Female",
+        goals: "weak syllable deletion",
         parentContact: "Alice Lee, 555-123-4567",
         specialRequests: "Requires extra time to complete exercises.",
         selectedSounds: ["r", "s", "th", "z", "l", "sh"],
@@ -71,6 +74,7 @@ function selectStudent(studentName) {
         document.getElementById("studentName").textContent = studentData[studentName].name;
         document.getElementById("dob").textContent = studentData[studentName].dob;
         document.getElementById("gender").textContent = studentData[studentName].gender;
+        document.getElementById("goals").textContent = studentData[studentName].goals;
         document.getElementById("parentContact").textContent = studentData[studentName].parentContact;
         document.getElementById("specialRequests").textContent = studentData[studentName].specialRequests;
 
@@ -142,6 +146,7 @@ function saveNewStudent(newStudentName) {
         name: newStudentName,
         dob: "",
         gender: "",
+        goals: "",
         parentContact: "",
         specialRequests: ""
     };
@@ -201,6 +206,7 @@ function clearStudentFields() {
     document.getElementById("studentName").textContent = "";
     document.getElementById("dob").textContent = "";
     document.getElementById("gender").textContent = "";
+    document.getElementById("goals").textContent = "";
     document.getElementById("parentContact").textContent = "";
     document.getElementById("specialRequests").textContent = "";
 }
@@ -269,6 +275,7 @@ function saveChanges(section) {
         studentData[studentName].name = document.getElementById("studentName").textContent;
         studentData[studentName].dob = document.getElementById("dob").textContent;
         studentData[studentName].gender = document.getElementById("gender").textContent;
+        studentData[studentName].gender = document.getElementById("goals").textContent;
     } else if (section === "parentGuardianInfo") {
         studentData[studentName].parentContact = document.getElementById("parentContact").textContent;
         studentData[studentName].specialRequests = document.getElementById("specialRequests").textContent;
