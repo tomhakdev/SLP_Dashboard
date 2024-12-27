@@ -1,3 +1,5 @@
+let isSaveListenerAttached = false;
+
 const studentData = {
     Tom: {
         id: "001",
@@ -9,10 +11,16 @@ const studentData = {
         specialRequests: "Needs additional practice with speech sounds at the start of words.",
         selectedSounds: ["r", "s"],
         sliderValues: {
-            soundLocation: [20, 30, 50], 
-            syllableCount: [33, 33, 34] 
-        }
-
+            soundLocation: [20, 30, 50], // Initial, medial, final percentages
+            syllableCount: [33, 33, 34], // One-syllable, two-syllable, three-syllable percentages
+            syllableShapes: [50, 50], // VCV and CVC percentages
+            syllableType: [70, 30], // Open and Closed percentages
+        },
+        targetWords: ["rose", "soup", "rat", "rice", "sip"], // Max 10 words
+        repetitions: {
+            type: "single", // Options: single, range
+            value: 3, // Single value or range (if range, e.g., { from: 2, to: 4 })
+        },
     },
     Simon: {
         id: "002",
@@ -25,8 +33,15 @@ const studentData = {
         selectedSounds: ["th"],
         sliderValues: {
             soundLocation: [5, 0, 95], 
-            syllableCount: [30, 50, 20] 
-        }
+            syllableCount: [30, 50, 20],
+            syllableShapes: [60, 40],
+            syllableType: [40, 60],
+        },
+        targetWords: ["cat", "kite", "gate", "bat", "sat"],
+        repetitions: {
+            type: "range", // Options: single, range
+            value: { from: 2, to: 5 }, // Single value or range
+        },
     },
     Yingel: {
         id: "003",
@@ -39,9 +54,16 @@ const studentData = {
         selectedSounds: ["r", "s", "th", "z", "l", "sh"],
         sliderValues: {
             soundLocation: [40, 20, 40], 
-            syllableCount: [40, 40, 20] 
-        }
-    }
+            syllableCount: [40, 40, 20],
+            syllableShapes: [70, 30],
+            syllableType: [50, 50],
+        },
+        targetWords: ["rabbit", "banana", "lamp", "sheep", "tiger", "apple"],
+        repetitions: {
+            type: "single", 
+            value: 5,
+        },
+    },
 };
 
 function selectStudent(studentName) {
@@ -301,7 +323,8 @@ function clearDropdown(dropdownId) {
 
 
 function savePracticeChanges() {
-    const studentName = document.getElementById("studentDropdown").value;
+    const studentNameDropdown = document.getElementById("studentDropdown");
+    const studentName = studentNameDropdown ? studentNameDropdown.value : null;
 
     if (!studentName || studentName === "add") {
         alert("Please select a valid student to save changes.");
@@ -310,15 +333,29 @@ function savePracticeChanges() {
 
     saveSelectedSounds(studentName);
 
-    const syllableFrequency = document.getElementById("multi-range-slider").value || "";
-    const assignedSounds = document.getElementById("assignedSounds").textContent.trim();
-    const assignedSyllables = document.getElementById("assignedSyllables").textContent.trim();
-    const assignedSoundLocation = document.getElementById("assignedSoundLocation").textContent.trim();
-    const assignedWords = document.getElementById("assignedWords").textContent.trim();
+    // Retrieve slider values
+    const sliders = {
+        soundLocation: getSliderValues("soundLocationSlider"),
+        syllableCount: getSliderValues("syllableCountSlider"),
+        syllableType: getTwoChoiceSliderValue("syllableTypeSlider"),
+        syllableShapes: getTwoChoiceSliderValue("syllableShapesSlider"),
+    };
+
+    // Retrieve summaries for syllable type and syllable shapes
+    const syllableTypeSummary = document.getElementById("syllableTypeSummary")?.textContent.trim();
+    const syllableShapesSummary = document.getElementById("syllableShapesSummary")?.textContent.trim();
+
+    // Retrieve other fields
+    const assignedSounds = document.getElementById("assignedSounds")?.textContent.trim() || "";
+    const assignedSyllables = document.getElementById("assignedSyllables")?.textContent.trim() || "";
+    const assignedSoundLocation = document.getElementById("assignedSoundLocation")?.textContent.trim() || "";
+    const assignedWords = document.getElementById("assignedWords")?.textContent.trim() || "";
 
     studentData[studentName] = {
-        ...studentData[studentName], 
-        syllableFrequency,
+        ...studentData[studentName],
+        sliderValues: sliders,
+        syllableType: syllableTypeSummary,
+        syllableShapes: syllableShapesSummary,
         assignedSounds,
         assignedSyllables,
         assignedSoundLocation,
@@ -328,6 +365,20 @@ function savePracticeChanges() {
     alert(`Changes saved successfully for ${studentName}.`);
     markSaveButtonInactive();
 }
+
+// Helper to get values from multi-range sliders
+function getSliderValues(sliderId) {
+    const slider = document.getElementById(sliderId);
+    return slider?.noUiSlider ? slider.noUiSlider.get().map(Number) : null;
+}
+
+// Helper to get values from single-choice sliders
+function getTwoChoiceSliderValue(sliderId) {
+    const slider = document.getElementById(sliderId);
+    return slider?.dataset?.value ? parseFloat(slider.dataset.value) : null;
+}
+
+
 
 function markSaveButtonActive() {
     const saveButton = document.getElementById("savePracticeButton");
@@ -345,14 +396,38 @@ function markSaveButtonInactive() {
 
 function setupChangeListeners() {
     const checkboxes = document.querySelectorAll(".select-sound input[type='checkbox']");
-    const otherFields = document.querySelectorAll("#multi-range-slider, .sound-dropdown");
+    const otherFields = document.querySelectorAll("#multi-range-slider, #syllableTypeSlider, #syllableShapesSlider, .sound-dropdown");
+    const targetWordInput = document.getElementById("target-word-input");
+    const repetitionTypeDropdown = document.getElementById("repetition-type");
+    const singleRepetitionDropdown = document.getElementById("single-repetition");
+    const rangeRepetitionDropdowns = document.querySelectorAll("#range-from, #range-to");
 
+    // Add listeners for checkboxes
     checkboxes.forEach(checkbox => {
         checkbox.addEventListener("change", markSaveButtonActive);
     });
 
+    // Add listeners for sliders and other fields
     otherFields.forEach(field => {
         field.addEventListener("change", markSaveButtonActive);
+    });
+
+    // Add listener for target word input
+    if (targetWordInput) {
+        targetWordInput.addEventListener("input", markSaveButtonActive);
+    }
+
+    // Add listeners for repetition type and dropdowns
+    if (repetitionTypeDropdown) {
+        repetitionTypeDropdown.addEventListener("change", markSaveButtonActive);
+    }
+
+    if (singleRepetitionDropdown) {
+        singleRepetitionDropdown.addEventListener("change", markSaveButtonActive);
+    }
+
+    rangeRepetitionDropdowns.forEach(dropdown => {
+        dropdown.addEventListener("change", markSaveButtonActive);
     });
 }
 
@@ -363,7 +438,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const saveButton = document.getElementById("savePracticeButton");
 
     if (saveButton && !isSaveListenerAttached) {
-        saveButton.addEventListener("click", savePracticeChanges, { once: true });
+        saveButton.addEventListener("click", savePracticeChanges);
         isSaveListenerAttached = true;
     }
 });
@@ -390,26 +465,48 @@ function saveSelectedSounds(studentName) {
     }
 }
 
-
-
 function loadSliderValues(studentName) {
     const student = studentData[studentName];
     if (!student || !student.sliderValues) return;
 
-    const soundLocationValues = student.sliderValues.soundLocation;
-    const syllableCountValues = student.sliderValues.syllableCount;
+    const { soundLocation, syllableCount, syllableType, syllableShapes } = student.sliderValues;
 
-    setMultiSliderValues("soundLocationSlider", soundLocationValues);
-    updateSliderSummary("soundLocationSummary", ["Beginning", "Middle", "End"], soundLocationValues);
+    if (soundLocation) {
+        setMultiSliderValues("soundLocationSlider", soundLocation);
+        updateSliderSummary("soundLocationSummary", ["Beginning", "Middle", "End"], soundLocation);
+    }
 
-    setMultiSliderValues("syllableCountSlider", syllableCountValues);
-    updateSliderSummary("syllableCountSummary", ["1 Syllable", "2 Syllables", "3+ Syllables"], syllableCountValues);
+    if (syllableCount) {
+        setMultiSliderValues("syllableCountSlider", syllableCount);
+        updateSliderSummary("syllableCountSummary", ["1 Syllable", "2 Syllables", "3+ Syllables"], syllableCount);
+    }
+
+    if (syllableType) {
+        updateTwoChoiceSummary("syllableTypeSummary", "Open", "Closed", syllableType);
+    }
+
+    if (syllableShapes) {
+        updateTwoChoiceSummary("syllableShapesSummary", "VCV", "CVC", syllableShapes);
+    }
 }
 
 function setMultiSliderValues(sliderId, values) {
     const slider = document.getElementById(sliderId);
     if (slider && slider.noUiSlider) {
         slider.noUiSlider.set(values);
+    }
+}
+
+function setSingleSliderValue(sliderId, value) {
+    const slider = document.getElementById(sliderId);
+    if (slider && slider.dataset.value !== undefined) {
+        slider.dataset.value = value;
+        const handle = slider.querySelector(".range-handle");
+        const highlight = slider.querySelector(".range-highlight");
+        if (handle && highlight) {
+            handle.style.left = `${value}%`;
+            highlight.style.width = `${value}%`;
+        }
     }
 }
 
@@ -420,11 +517,24 @@ function updateSliderSummary(summaryId, labels, values) {
         .join(", ");
 }
 
+function updateTwoChoiceSummary(summaryId, label1, label2, value) {
+    const summary = document.getElementById(summaryId);
+
+    // Ensure value is a number or fallback to 0
+    const numericValue = typeof value === "number" ? value : parseFloat(value[0]) || 0;
+
+    const label1Value = numericValue.toFixed(0);
+    const label2Value = (100 - numericValue).toFixed(0);
+    summary.textContent = `${label1}: ${label1Value}%, ${label2}: ${label2Value}%`;
+}
 
 function setupSliderListeners() {
     const soundLocationSlider = document.getElementById("soundLocationSlider");
     const syllableCountSlider = document.getElementById("syllableCountSlider");
+    const syllableTypeSlider = document.getElementById("syllableTypeSlider");
+    const syllableShapesSlider = document.getElementById("syllableShapesSlider");
 
+    // Add event listeners for multi-range sliders
     if (soundLocationSlider && soundLocationSlider.noUiSlider) {
         soundLocationSlider.noUiSlider.on("update", markSaveButtonActive);
     }
@@ -432,9 +542,25 @@ function setupSliderListeners() {
     if (syllableCountSlider && syllableCountSlider.noUiSlider) {
         syllableCountSlider.noUiSlider.on("update", markSaveButtonActive);
     }
+
+    // Add event listeners for single-choice sliders
+    if (syllableTypeSlider) {
+        syllableTypeSlider.addEventListener("input", () => {
+            markSaveButtonActive();
+            updateTwoChoiceSummary("syllableTypeSummary", "Open", "Closed", syllableTypeSlider.dataset.value);
+        });
+    }
+
+    if (syllableShapesSlider) {
+        syllableShapesSlider.addEventListener("input", () => {
+            markSaveButtonActive();
+            updateTwoChoiceSummary("syllableShapesSummary", "VCV", "CVC", syllableShapesSlider.dataset.value);
+        });
+    }
 }
 
 document.addEventListener("DOMContentLoaded", setupSliderListeners);
+
 
 
 
@@ -725,20 +851,36 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 
-function assignSound(value) {
-    document.getElementById("assignedSounds").textContent = `Selected Sound: ${value}`;
+  function assignSound(value) {
+    document.getElementById("assignedSounds").textContent = `Selected Sounds: ${value}`;
 }
 
 function assignSyllable(value) {
-    document.getElementById("assignedSyllables").textContent = `Selected Syllable: ${value}`;
+    document.getElementById("assignedSyllables").textContent = `Selected Syllables: ${value}`;
 }
 
-function assignSoundLocation(value) {
-    document.getElementById("assignedSoundLocation").textContent = `Selected Location: ${value}`;
+function assignSoundLocation(values) {
+    const labels = ["Beginning", "Middle", "End"];
+    const summary = values
+        .map((v, i) => `${labels[i]}: ${v}%`)
+        .join(", ");
+    document.getElementById("assignedSoundLocation").textContent = `Selected Locations: ${summary}`;
 }
 
 function assignWord(value) {
-    document.getElementById("assignedWords").textContent = `Selected Word: ${value}`;
+    document.getElementById("assignedWords").textContent = `Selected Words: ${value}`;
+}
+
+function assignSyllableType(value) {
+    const openPercentage = value.toFixed(0);
+    const closedPercentage = (100 - value).toFixed(0);
+    document.getElementById("assignedSyllableType").textContent = `Open: ${openPercentage}%, Closed: ${closedPercentage}%`;
+}
+
+function assignSyllableShape(value) {
+    const vcvPercentage = value.toFixed(0);
+    const cvcPercentage = (100 - value).toFixed(0);
+    document.getElementById("assignedSyllableShapes").textContent = `VCV: ${vcvPercentage}%, CVC: ${cvcPercentage}%`;
 }
 
 
