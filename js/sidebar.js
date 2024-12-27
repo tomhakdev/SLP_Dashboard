@@ -675,6 +675,38 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 
+  document.addEventListener("DOMContentLoaded", () => {
+    const repetitionType = document.getElementById("repetition-type");
+    const singleRepetition = document.getElementById("single-repetition");
+    const rangeRepetition = document.getElementById("range-repetition");
+    const rangeFrom = document.getElementById("range-from");
+    const rangeTo = document.getElementById("range-to");
+  
+    // Handle Repetition Type Selection
+    repetitionType.addEventListener("change", () => {
+      if (repetitionType.value === "single") {
+        singleRepetition.classList.remove("hidden");
+        rangeRepetition.classList.add("hidden");
+      } else if (repetitionType.value === "range") {
+        singleRepetition.classList.add("hidden");
+        rangeRepetition.classList.remove("hidden");
+      }
+    });
+  
+    // Handle Range Validation
+    rangeTo.addEventListener("change", () => {
+      const fromValue = parseInt(rangeFrom.value, 10);
+      const toValue = parseInt(rangeTo.value, 10);
+  
+      if (fromValue && toValue && fromValue >= toValue) {
+        alert("The 'To' value must be greater than the 'From' value.");
+        rangeTo.value = ""; // Reset the "To" value
+      }
+    });
+  });
+
+
+
 
 
 
