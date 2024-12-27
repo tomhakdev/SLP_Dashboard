@@ -177,12 +177,25 @@
             </div>
                 
 
-                <label>Vowel Combination Distribution:</label>
-                <div id="vowelCombinationSlider" class="multi-slider">
-                    <!-- Dynamically generated sliders for each vowel -->
+                
+            <div id="syllableShapesContainer">
+              <label class="slider-title">Select Syllable Shape Frequency:</label>
+              
+              
+              <!-- Open vs. Closed Slider -->
+              <div id="syllableTypeContainer">
+                <div id="syllableTypeSlider" class="multi-range-slider"></div>
+                <div id="syllableTypeSummary" class="slider-summary">
+                  Open: 50%, Closed: 50%
                 </div>
-                <div id="vowelSummary"></div> 
+              </div>
 
+              
+              <div id="syllableShapesSlider" class="multi-range-slider"></div>
+              <div id="syllableShapesSummary" class="slider-summary">
+                Vowel-Consonant-Vowel: 50%, Consonant-Vowel-Consonant: 50%
+              </div>
+            </div>
 
 
               <div class="target-words">

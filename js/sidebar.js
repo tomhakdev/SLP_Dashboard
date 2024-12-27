@@ -614,6 +614,115 @@ document.addEventListener("DOMContentLoaded", () => {
   
   
 
+document.addEventListener("DOMContentLoaded", () => {
+    class TwoChoiceSlider {
+      constructor(container, settings = {}) {
+        this.container = container;
+        this.settings = {
+          min: settings.min || 0,
+          max: settings.max || 100,
+          range: settings.range || 50, // Default 50% each
+          step: settings.step || 1,
+          colors: settings.colors || ["#007bff", "#ffc107"],
+          summaryId: settings.summaryId || null,
+          labels: settings.labels || ["Option 1", "Option 2"],
+        };
+  
+        this.value = this.settings.range; // Single range value (0-100)
+        this.handle = null;
+        this.highlight = null;
+        this.init();
+      }
+  
+      init() {
+        this.container.classList.add("multi-range-slider");
+  
+        // Range track
+        this.track = document.createElement("div");
+        this.track.classList.add("range-track");
+        this.container.appendChild(this.track);
+  
+        // Highlight
+        this.highlight = document.createElement("div");
+        this.highlight.classList.add("range-highlight");
+        this.highlight.style.backgroundColor = this.settings.colors[0];
+        this.container.appendChild(this.highlight);
+  
+        // Handle
+        this.handle = document.createElement("div");
+        this.handle.classList.add("range-handle");
+        this.handle.style.left = `${this.value}%`;
+        this.handle.addEventListener("mousedown", (e) => this.startDragging(e));
+        this.container.appendChild(this.handle);
+  
+        this.updateAll();
+      }
+  
+      updateAll() {
+        const percentage = this.value;
+        this.handle.style.left = `${percentage}%`;
+        this.highlight.style.width = `${percentage}%`;
+  
+        if (this.settings.summaryId) {
+          const summaryElement = document.getElementById(this.settings.summaryId);
+          if (summaryElement) {
+            const option1 = percentage.toFixed(0);
+            const option2 = (100 - percentage).toFixed(0);
+            summaryElement.innerText = `${this.settings.labels[0]}: ${option1}%, ${this.settings.labels[1]}: ${option2}%`;
+          }
+        }
+      }
+  
+      startDragging(event) {
+        const onMouseMove = (e) => this.dragHandle(e);
+        const onMouseUp = () => {
+          window.removeEventListener("mousemove", onMouseMove);
+          window.removeEventListener("mouseup", onMouseUp);
+        };
+  
+        window.addEventListener("mousemove", onMouseMove);
+        window.addEventListener("mouseup", onMouseUp);
+      }
+  
+      dragHandle(event) {
+        const rect = this.container.getBoundingClientRect();
+        const percentage = ((event.clientX - rect.left) / rect.width) * 100;
+        const value = Math.min(
+          Math.max(this.settings.min, percentage),
+          this.settings.max
+        );
+  
+        if (Math.abs(value - this.value) >= this.settings.step) {
+          this.value = value;
+          this.updateAll();
+        }
+      }
+    }
+  
+    // Initialize the Open vs. Closed slider
+    new TwoChoiceSlider(document.getElementById("syllableTypeSlider"), {
+      min: 0,
+      max: 100,
+      range: 50, // Default to 50% Open, 50% Closed
+      step: 1,
+      colors: ["#007bff", "#ffc107"], // Blue for Open, Yellow for Closed
+      summaryId: "syllableTypeSummary",
+      labels: ["Open", "Closed"],
+    });
+  
+    // Initialize the VCV vs. CVC slider
+    new TwoChoiceSlider(document.getElementById("syllableShapesSlider"), {
+      min: 0,
+      max: 100,
+      range: 50, // Default to 50% VCV, 50% CVC
+      step: 1,
+      colors: ["#007bff", "#ffc107"], // Blue for VCV, Yellow for CVC
+      summaryId: "syllableShapesSummary",
+      labels: ["Vowel-Consonant-Vowel", "Consonant-Vowel-Consonant"],
+    });
+  });
+  
+
 
 
 function assignSound(value) {

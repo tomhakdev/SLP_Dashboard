@@ -1,5 +1,5 @@
 .sidebar {
-    width: 350px; 
+    width: 450px; 
     transition: width 0.05s ease;
     position: relative;
 }
@@ -198,6 +198,18 @@ p.studentSettings{
 }
 
 
+.slider-subtitle {
+    font-size: 14px;
+    font-weight: bold;
+    margin-top: 10px;
+    text-align: center;
+  }
+
+
+.target-words label{
+    font-weight: bold;
+}
+
 
 .target-words {
     margin-top: 20px;
@@ -249,7 +261,7 @@ p.studentSettings{
   .repetitions label {
     display: block;
     margin-bottom: 5px;
-    font-weight: bold;
+
   }
   
   .repetitions select {
