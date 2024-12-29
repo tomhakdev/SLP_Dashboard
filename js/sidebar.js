@@ -534,33 +534,45 @@ function setupSliderListeners() {
     const syllableTypeSlider = document.getElementById("syllableTypeSlider");
     const syllableShapesSlider = document.getElementById("syllableShapesSlider");
 
-    // Add event listeners for multi-range sliders
+    // Multi-range sliders
     if (soundLocationSlider && soundLocationSlider.noUiSlider) {
-        soundLocationSlider.noUiSlider.on("update", markSaveButtonActive);
+        soundLocationSlider.noUiSlider.on("update", () => {
+            console.log("Sound Location Slider updated");
+            const values = soundLocationSlider.noUiSlider.get().map(Number);
+            updateSliderSummary("soundLocationSummary", ["Beginning", "Middle", "End"], values);
+            markSaveButtonActive();
+        });
     }
 
     if (syllableCountSlider && syllableCountSlider.noUiSlider) {
-        syllableCountSlider.noUiSlider.on("update", markSaveButtonActive);
+        syllableCountSlider.noUiSlider.on("update", () => {
+            const values = syllableCountSlider.noUiSlider.get().map(Number);
+            updateSliderSummary("syllableCountSummary", ["1 Syllable", "2 Syllables", "3+ Syllables"], values);
+            markSaveButtonActive();
+        });
     }
 
-    // Add event listeners for single-choice sliders
+    // Single-choice sliders
     if (syllableTypeSlider) {
         syllableTypeSlider.addEventListener("input", () => {
+            const value = parseFloat(syllableTypeSlider.dataset.value || 0);
+            updateTwoChoiceSummary("syllableTypeSummary", "Open", "Closed", value);
             markSaveButtonActive();
-            updateTwoChoiceSummary("syllableTypeSummary", "Open", "Closed", syllableTypeSlider.dataset.value);
         });
     }
 
     if (syllableShapesSlider) {
         syllableShapesSlider.addEventListener("input", () => {
+            const value = parseFloat(syllableShapesSlider.dataset.value || 0);
+            updateTwoChoiceSummary("syllableShapesSummary", "VCV", "CVC", value);
             markSaveButtonActive();
-            updateTwoChoiceSummary("syllableShapesSummary", "VCV", "CVC", syllableShapesSlider.dataset.value);
         });
     }
 }
 
-document.addEventListener("DOMContentLoaded", setupSliderListeners);
-
+document.addEventListener("DOMContentLoaded", () => {
+    setupSliderListeners();
+});
 
 
 
@@ -737,6 +749,9 @@ document.addEventListener("DOMContentLoaded", () => {
         summaryId: "syllableCountSummary",
     });
 });
+
+console.log("Slider element:", soundLocationSlider);
+console.log("noUiSlider instance:", soundLocationSlider.noUiSlider);
   
   
 
