@@ -104,10 +104,14 @@ p.studentSettings{
     cursor: pointer;
 }
 
-.select-sound {
+.select-sound .title {
     margin-top: 16px;
     margin-bottom: 20px;
     font-weight: bold;
+  }
+
+  .select-sound .multi-select-menu label{
+    font-weight: normal;
   }
   
   .multi-select-menu {
@@ -116,6 +120,7 @@ p.studentSettings{
     grid-template-columns: repeat(2, 1fr);
     flex-direction: column;
     gap: 8px;
+    margin-bottom: 30px;
   }
   
   .multi-select-menu label {
@@ -261,6 +266,7 @@ p.studentSettings{
   .repetitions label {
     display: block;
     margin-bottom: 5px;
+    font-weight: bold;
 
   }
   
@@ -279,7 +285,7 @@ p.studentSettings{
 .delete-button {
     width: 100%;
     padding: 10px;
-    margin-top: 20px;
+    margin-top: 40px;
     background-color: red;
     color: white;
     font-weight: bold;

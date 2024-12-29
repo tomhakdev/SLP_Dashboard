@@ -74,44 +74,114 @@ function selectStudent(studentName) {
     resetEditIcons();
 
     if (studentName === "add") {
-        showNewStudentInput();  
-
+        showNewStudentInput();
         clearStudentFields();
-
         sidebarContent.style.display = "block";
         cancelButton.style.display = "inline";
         deleteButton.style.display = "none";
-
         enableEditing("studentData");
         enableEditing("parentGuardianInfo");
-        document.getElementById("studentID").setAttribute("contenteditable", "false"); 
-
-
+        document.getElementById("studentID").setAttribute("contenteditable", "false");
     } else if (studentData[studentName]) {
+        // Show relevant UI elements
         sidebarContent.style.display = "block";
         cancelButton.style.display = "none";
         deleteButton.style.display = "block";
 
-        document.getElementById("studentID").textContent = studentData[studentName].id;
-        document.getElementById("studentName").textContent = studentData[studentName].name;
-        document.getElementById("dob").textContent = studentData[studentName].dob;
-        document.getElementById("gender").textContent = studentData[studentName].gender;
-        document.getElementById("goals").textContent = studentData[studentName].goals;
-        document.getElementById("parentContact").textContent = studentData[studentName].parentContact;
-        document.getElementById("specialRequests").textContent = studentData[studentName].specialRequests;
+        // Load basic student information
+        const student = studentData[studentName];
+        document.getElementById("studentID").textContent = student.id;
+        document.getElementById("studentName").textContent = student.name;
+        document.getElementById("dob").textContent = student.dob;
+        document.getElementById("gender").textContent = student.gender;
+        document.getElementById("goals").textContent = student.goals;
+        document.getElementById("parentContact").textContent = student.parentContact;
+        document.getElementById("specialRequests").textContent = student.specialRequests;
 
+        // Disable editing initially
         disableEditing("studentData");
         disableEditing("parentGuardianInfo");
-        document.getElementById("studentID").setAttribute("contenteditable", "false");  
+        document.getElementById("studentID").setAttribute("contenteditable", "false");
 
+        // Load selected sounds
         loadSelectedSounds(studentName);
-        loadSliderValues(studentName);
+
+        // Load slider values
+        if (student.sliderValues) {
+            // Sound Location slider
+            if (student.sliderValues.soundLocation) {
+                const soundLocationSlider = document.getElementById("soundLocationSlider");
+                if (soundLocationSlider && soundLocationSlider.noUiSlider) {
+                    soundLocationSlider.noUiSlider.set(student.sliderValues.soundLocation);
+                    updateSliderSummary("soundLocationSummary", 
+                        ["Beginning", "Middle", "End"], 
+                        student.sliderValues.soundLocation);
+                }
+            }
+
+            // Syllable Count slider
+            if (student.sliderValues.syllableCount) {
+                const syllableCountSlider = document.getElementById("syllableCountSlider");
+                if (syllableCountSlider && syllableCountSlider.noUiSlider) {
+                    syllableCountSlider.noUiSlider.set(student.sliderValues.syllableCount);
+                    updateSliderSummary("syllableCountSummary",
+                        ["1 Syllable", "2 Syllables", "3+ Syllables"],
+                        student.sliderValues.syllableCount);
+                }
+            }
+
+            // Syllable Type slider (Open vs Closed)
+            if (student.sliderValues.syllableType) {
+                const syllableTypeSlider = document.getElementById("syllableTypeSlider");
+                if (syllableTypeSlider) {
+                    syllableTypeSlider.dataset.value = student.sliderValues.syllableType[0];
+                    updateTwoChoiceSummary("syllableTypeSummary", 
+                        "Open", "Closed", 
+                        student.sliderValues.syllableType[0]);
+                }
+            }
+
+            // Syllable Shapes slider (VCV vs CVC)
+            if (student.sliderValues.syllableShapes) {
+                const syllableShapesSlider = document.getElementById("syllableShapesSlider");
+                if (syllableShapesSlider) {
+                    syllableShapesSlider.dataset.value = student.sliderValues.syllableShapes[0];
+                    updateTwoChoiceSummary("syllableShapesSummary", 
+                        "VCV", "CVC", 
+                        student.sliderValues.syllableShapes[0]);
+                }
+            }
+        }
+
+        // Load target words
+        if (student.targetWords) {
+            loadTargetWords(student.targetWords);
+        }
+
+        // Load repetition settings
+        if (student.repetitions) {
+            const repetitionType = document.getElementById("repetition-type");
+            const singleRepetition = document.getElementById("single-repetition");
+            const rangeRepetition = document.getElementById("range-repetition");
+            
+            repetitionType.value = student.repetitions.type;
+            
+            if (student.repetitions.type === "single") {
+                singleRepetition.classList.remove("hidden");
+                rangeRepetition.classList.add("hidden");
+                singleRepetition.value = student.repetitions.value;
+            } else if (student.repetitions.type === "range") {
+                singleRepetition.classList.add("hidden");
+                rangeRepetition.classList.remove("hidden");
+                document.getElementById("range-from").value = student.repetitions.value.from;
+                document.getElementById("range-to").value = student.repetitions.value.to;
+            }
+        }
 
     } else {
         sidebarContent.style.display = "none";
         cancelButton.style.display = "none";
         deleteButton.style.display = "none";
-
         clearStudentFields();
     }
 }
@@ -490,6 +560,27 @@ function loadSliderValues(studentName) {
     }
 }
 
+
+
+function loadTargetWords(words = []) { // Default to an empty array if words is undefined
+    const list = document.getElementById("target-word-list");
+    list.innerHTML = ""; // Clear the list
+    words.forEach(word => {
+        const li = document.createElement("li");
+        li.textContent = word;
+
+        const removeBtn = document.createElement("button");
+        removeBtn.textContent = "x";
+        removeBtn.addEventListener("click", () => {
+            list.removeChild(li);
+        });
+
+        li.appendChild(removeBtn);
+        list.appendChild(li);
+    });
+}
+
+
 function setMultiSliderValues(sliderId, values) {
     const slider = document.getElementById(sliderId);
     if (slider && slider.noUiSlider) {
@@ -512,9 +603,11 @@ function setSingleSliderValue(sliderId, value) {
 
 function updateSliderSummary(summaryId, labels, values) {
     const summary = document.getElementById(summaryId);
-    summary.textContent = labels
-        .map((label, index) => `${label}: ${values[index]}%`)
-        .join(", ");
+    if (summary) {
+        summary.textContent = labels
+            .map((label, index) => `${label}: ${values[index]}%`)
+            .join(", ");
+    }
 }
 
 function updateTwoChoiceSummary(summaryId, label1, label2, value) {

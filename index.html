@@ -49,7 +49,7 @@
 
 
             <div class="select-sound">
-                <label for="sound-options">Select Sound:</label>
+                <label for="sound-options" class = "title">Select Sound:</label>
                 <div id="sound-options" class="multi-select-menu">
                   <label>
                     <input type="checkbox" value="p" data-option="p" />
@@ -202,17 +202,39 @@
                 <label for="target-word-input">Target Words (Max. 10):</label>
                 
                               <!-- Repetitions Section -->
-                <div class="repetitions">
-                  <label for="repetition-type">Repetitions:</label>
-                  <select id="repetition-type">
-                    <option value="" disabled selected>Select Type</option>
-                    <option value="single">Single</option>
-                    <option value="range">Range</option>
-                  </select>
+                
+                
+                <input type="text" id="target-word-input" placeholder="Enter Practice Words" />
+                <ul id="target-word-list"></ul>
+              </div>
 
-                  <!-- Single Dropdown Menu -->
-                  <select id="single-repetition" class="hidden">
-                    <option value="" disabled selected>Select</option>
+
+              <div class="repetitions">
+                <label for="repetition-type">Repetitions:</label>
+                <select id="repetition-type">
+                  <option value="" disabled selected>Select Type</option>
+                  <option value="single">Single</option>
+                  <option value="range">Range</option>
+                </select>
+
+                <!-- Single Dropdown Menu -->
+                <select id="single-repetition" class="hidden">
+                  <option value="" disabled selected>Select</option>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                  <option value="6">6</option>
+                  <option value="7">7</option>
+                  <option value="8">8</option>
+                  <option value="9">9</option>
+                </select>
+
+                <!-- Range Dropdown Menus -->
+                <div id="range-repetition" class="hidden">
+                  <select id="range-from">
+                    <option value="" disabled selected>From</option>
                     <option value="1">1</option>
                     <option value="2">2</option>
                     <option value="3">3</option>
@@ -223,38 +245,19 @@
                     <option value="8">8</option>
                     <option value="9">9</option>
                   </select>
-
-                  <!-- Range Dropdown Menus -->
-                  <div id="range-repetition" class="hidden">
-                    <select id="range-from">
-                      <option value="" disabled selected>From</option>
-                      <option value="1">1</option>
-                      <option value="2">2</option>
-                      <option value="3">3</option>
-                      <option value="4">4</option>
-                      <option value="5">5</option>
-                      <option value="6">6</option>
-                      <option value="7">7</option>
-                      <option value="8">8</option>
-                      <option value="9">9</option>
-                    </select>
-                    <select id="range-to">
-                      <option value="" disabled selected>To</option>
-                      <option value="1">1</option>
-                      <option value="2">2</option>
-                      <option value="3">3</option>
-                      <option value="4">4</option>
-                      <option value="5">5</option>
-                      <option value="6">6</option>
-                      <option value="7">7</option>
-                      <option value="8">8</option>
-                      <option value="9">9</option>
-                    </select>
-                  </div>
+                  <select id="range-to">
+                    <option value="" disabled selected>To</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                    <option value="9">9</option>
+                  </select>
                 </div>
-                
-                <input type="text" id="target-word-input" placeholder="Enter Practice Words" />
-                <ul id="target-word-list"></ul>
               </div>
 
         </div>
@@ -262,7 +265,7 @@
 
 
 
-        <button id="deleteButton" onclick="confirmDeleteStudent()" style="display: none;" class="delete-button">Delete</button>
+        <button id="deleteButton" onclick="confirmDeleteStudent()" style="display: none;" class="delete-button">Delete Student Data</button>
     
         <div class="resize-handle" id="resizeHandle"></div>
     </div>
