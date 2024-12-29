@@ -727,6 +727,8 @@ class MultiRangeSlider {
 
         this.values[index] = value;
         this.updateAll();
+
+        markSaveButtonActive();
     }
 }
 
@@ -748,13 +750,12 @@ document.addEventListener("DOMContentLoaded", () => {
         colors: ["#FF5733", "#33FF57", "#3357FF"], 
         summaryId: "syllableCountSummary",
     });
+
+    soundLocationSlider.container.addEventListener("input", markSaveButtonActive);
+    syllableCountSlider.container.addEventListener("input", markSaveButtonActive);
 });
 
-console.log("Slider element:", soundLocationSlider);
-console.log("noUiSlider instance:", soundLocationSlider.noUiSlider);
   
-  
-
 document.addEventListener("DOMContentLoaded", () => {
     class TwoChoiceSlider {
       constructor(container, settings = {}) {
@@ -837,6 +838,8 @@ document.addEventListener("DOMContentLoaded", () => {
           this.value = value;
           this.updateAll();
         }
+
+        markSaveButtonActive();
       }
     }
   
