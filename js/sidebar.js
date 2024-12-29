@@ -147,7 +147,7 @@ function selectStudent(studentName) {
                 if (syllableShapesSlider) {
                     syllableShapesSlider.dataset.value = student.sliderValues.syllableShapes[0];
                     updateTwoChoiceSummary("syllableShapesSummary", 
-                        "VCV", "CVC", 
+                        "Vowel-Consonant-Vowel", "Consonant-Vowel-Consonant", 
                         student.sliderValues.syllableShapes[0]);
                 }
             }
@@ -556,7 +556,7 @@ function loadSliderValues(studentName) {
     }
 
     if (syllableShapes) {
-        updateTwoChoiceSummary("syllableShapesSummary", "VCV", "CVC", syllableShapes);
+        updateTwoChoiceSummary("syllableShapesSummary", "Vowel-Consonant-Vowel", "Consonant-Vowel-Consonant", syllableShapes);
     }
 }
 
@@ -657,7 +657,7 @@ function setupSliderListeners() {
     if (syllableShapesSlider) {
         syllableShapesSlider.addEventListener("input", () => {
             const value = parseFloat(syllableShapesSlider.dataset.value || 0);
-            updateTwoChoiceSummary("syllableShapesSummary", "VCV", "CVC", value);
+            updateTwoChoiceSummary("syllableShapesSummary", "Vowel-Consonant-Vowel", "Consonant-Vowel-Consonant", value);
             markSaveButtonActive();
         });
     }
@@ -840,7 +840,7 @@ document.addEventListener("DOMContentLoaded", () => {
         max: 100,
         ranges: [33, 66],
         step: 1,
-        colors: ["#FF5733", "#33FF57", "#3357FF"], 
+        colors: ["#3357FF", "#33FF57", "#3357FF"], 
         summaryId: "syllableCountSummary",
     });
 
@@ -991,7 +991,7 @@ function assignSyllableType(value) {
 function assignSyllableShape(value) {
     const vcvPercentage = value.toFixed(0);
     const cvcPercentage = (100 - value).toFixed(0);
-    document.getElementById("assignedSyllableShapes").textContent = `VCV: ${vcvPercentage}%, CVC: ${cvcPercentage}%`;
+    document.getElementById("assignedSyllableShapes").textContent = `Vowel-Consonant-Vowel: ${vcvPercentage}%, Consonant-Vowel-Consonant: ${cvcPercentage}%`;
 }
 
 
