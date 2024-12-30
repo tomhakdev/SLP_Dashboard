@@ -1,236 +1,349 @@
-/*const studentData = {
-    student1: { 
-        accuracyTime: [70, 75, 80, 85], 
-        letterCombination: { S: [90, 85, 70, 95], R: [80, 70, 75, 90] }, 
-        gameLevels: [60, 75, 80, 95], 
-        confidence: [50, 30, 20],
-        syllables: [60, 70, 80, 90],
-        soundLocation: [75, 85, 90],
-        minutesPracticed: [30, 45, 50, 60]  // New data
+// Enhanced mock data for student performance metrics
+const studentMetrics = {
+    Tom: {
+        totalAccuracy: {
+            labels: ['Correct', 'Incorrect', 'Unsure'],
+            data: [75, 15, 10]
+        },
+        soundAccuracy: {
+            labels: ['S', 'Z', 'R'],
+            data: [75, 90, 55]
+        },
+        locationAccuracy: {
+            labels: ['Beginning', 'Middle', 'End'],
+            data: [45, 80, 99]
+        },
+        syllableCountAccuracy: {
+            labels: ['1 Syllable', '2 Syllables', '3+ Syllables'],
+            data: [85, 80, 65]
+        },
+        syllableShapeOpenClosed: {
+            labels: ['Open', 'Closed'],
+            data: [67, 67]
+        },
+        syllableShapeVCVCVC: {
+            labels: ['VCV', 'CVC'],
+            data: [90, 80]
+        },
+        wordAccuracy: {
+            labels: ['Correct', 'Incorrect', 'Unsure'],
+            data: [90, 5, 5]
+        },
+        minutesPracticed: {
+            labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4'],
+            data: [150, 120, 60, 80]
+        },
+        weeklyProgress: {
+            labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'],
+            data: [80, 60, 55, 90, 85]
+        },
+        monthlyProgress: {
+            labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May'],
+            data: [40, 48, 90, 96, 75]
+        }
     },
-    student2: { 
-        accuracyTime: [60, 70, 75, 80], 
-        letterCombination: { S: [85, 80, 75, 90], R: [70, 65, 60, 85] }, 
-        gameLevels: [55, 65, 75, 85], 
-        confidence: [45, 35, 20],
-        syllables: [55, 65, 75, 85],
-        soundLocation: [65, 75, 80],
-        minutesPracticed: [25, 35, 40, 55]  // New data
+    Simon: {
+        totalAccuracy: {
+            labels: ['Correct', 'Incorrect', 'Unsure'],
+            data: [15, 70, 15]
+        },
+        soundAccuracy: {
+            labels: ['K', 'T', 'G', 'TH', 'CH'],
+            data: [30, 25, 40, 75, 80]
+        },
+        locationAccuracy: {
+            labels: ['Beginning', 'Middle', 'End'],
+            data: [20, 40, 34]
+        },
+        syllableCountAccuracy: {
+            labels: ['1 Syllable', '2 Syllables', '3+ Syllables'],
+            data: [70, 30, 15]
+        },
+        syllableShapeOpenClosed: {
+            labels: ['Open', 'Closed'],
+            data: [40, 55]
+        },
+        syllableShapeVCVCVC: {
+            labels: ['VCV', 'CVC'],
+            data: [15, 90]
+        },
+        wordAccuracy: {
+            labels: ['Correct', 'Incorrect', 'Unsure'],
+            data: [40, 20, 40]
+        },
+        minutesPracticed: {
+            labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4'],
+            data: [150, 100, 140, 160]
+        },
+        weeklyProgress: {
+            labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'],
+            data: [62, 89, 22, 66, 45]
+        },
+        monthlyProgress: {
+            labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May'],
+            data: [62, 80, 44, 52, 18]
+        }
     },
-    student3: { 
-        accuracyTime: [65, 72, 78, 82], 
-        letterCombination: { S: [88, 77, 66, 99], R: [75, 85, 70, 80] }, 
-        gameLevels: [45, 55, 65, 75], 
-        confidence: [40, 40, 20],
-        syllables: [50, 60, 70, 80],
-        soundLocation: [70, 80, 85],
-        minutesPracticed: [20, 30, 45, 50]  // New data
+    Yingel: {
+        totalAccuracy: {
+            labels: ['Correct', 'Incorrect', 'Unsure'],
+            data: [55, 20, 25]
+        },
+        soundAccuracy: {
+            labels: ['R', 'L', 'S', 'TH', 'CH', 'SH'],
+            data: [82, 78, 85, 70, 75, 80]
+        },
+        locationAccuracy: {
+            labels: ['Beginning', 'Middle', 'End'],
+            data: [85, 75, 70]
+        },
+        syllableCountAccuracy: {
+            labels: ['1 Syllable', '2 Syllables', '3+ Syllables'],
+            data: [88, 82, 75]
+        },
+        syllableShapeOpenClosed: {
+            labels: ['Open', 'Closed'],
+            data: [82, 78]
+        },
+        syllableShapeVCVCVC: {
+            labels: ['VCV', 'CVC'],
+            data: [75, 80]
+        },
+        wordAccuracy: {
+            labels: ['Correct', 'Incorrect', 'Unsure'],
+            data: [70, 20, 10]
+        },
+        minutesPracticed: {
+            labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4'],
+            data: [120, 150, 140, 180]
+        },
+        weeklyProgress: {
+            labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'],
+            data: [65, 70, 75, 80, 85]
+        },
+        monthlyProgress: {
+            labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May'],
+            data: [60, 68, 75, 82, 88]
+        }
     },
-    student4: { 
-        accuracyTime: [21, 32, 14, 12], 
-        letterCombination: { S: [12, 10, 5, 7], R: [9, 16, 2, 10] }, 
-        gameLevels: [45, 55, 65, 75], 
-        confidence: [0, 20, 80],
-        syllables: [50, 60, 70, 80],
-        soundLocation: [70, 80, 85],
-        minutesPracticed: [20, 30, 45, 50]  // New data
-    }
+    // Add similar data structure for other students...
 };
 
-// Initialize charts as empty variables so we can update them later
-let accuracyTimeChart, letterCombinationChart, gameLevelChart, confidenceChart;
-let accuracyBySyllablesChart, accuracyBySoundLocationChart, minutesPracticedChart;
+// Chart instances
+let charts = {
+    totalAccuracy: null,
+    soundAccuracy: null,
+    locationAccuracy: null,
+    syllableCountAccuracy: null,
+    syllableShapeOpenClosed: null,
+    syllableShapeVCVCVC: null,
+    wordAccuracy: null,
+    minutesPracticed: null,
+    weeklyProgress: null,
+    monthlyProgress: null
+};
 
-// Default sound
-let selectedSound = 'S';
-
-// Function to initialize charts with the first student's data
-function loadCharts() {
-    const data = studentData.student1;
-
-    // Accuracy Time Chart (existing code)
-    const accuracyTimeCtx = document.getElementById("accuracyTimeChart");
-    if (accuracyTimeCtx) {
-        accuracyTimeChart = new Chart(accuracyTimeCtx, {
-            type: 'line',
-            data: {
-                labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4'],
-                datasets: [{
-                    label: 'Accuracy Over Time',
-                    data: data.accuracyTime,
-                    backgroundColor: 'rgba(54, 162, 235, 0.2)',
-                    borderColor: 'rgba(54, 162, 235, 1)',
-                    borderWidth: 1
-                }]
-            },
-            options: { responsive: true, scales: { y: { beginAtZero: true, max: 100 } } }
-        });
-    }
-
-    // Letter Combination Chart
-    const letterCombinationCtx = document.getElementById("letterCombinationChart");
-    if (letterCombinationCtx) {
-        letterCombinationChart = new Chart(letterCombinationCtx, {
-            type: 'pie',
-            data: {
-                labels: [`${selectedSound}a`, `${selectedSound}e`, `${selectedSound}i`, `${selectedSound}o`],
-                datasets: [{
-                    label: 'Accuracy by Letter Combinations',
-                    data: data.letterCombination[selectedSound],
-                    backgroundColor: ['rgba(255, 99, 132, 0.2)', 'rgba(54, 162, 235, 0.2)', 'rgba(255, 206, 86, 0.2)', 'rgba(75, 192, 192, 0.2)'],
-                    borderColor: ['rgba(255, 99, 132, 1)', 'rgba(54, 162, 235, 1)', 'rgba(255, 206, 86, 1)', 'rgba(75, 192, 192, 1)'],
-                    borderWidth: 1
-                }]
-            },
-            options: { responsive: true }
-        });
-    }
-
-    // Game Level Chart
-    const gameLevelCtx = document.getElementById("gameLevelChart");
-    if (gameLevelCtx) {
-        gameLevelChart = new Chart(gameLevelCtx, {
-            type: 'bar',
-            data: {
-                labels: ['Level 1', 'Level 2', 'Level 3', 'Level 4'],
-                datasets: [{
-                    label: 'Progress by Game Level',
-                    data: data.gameLevels,
-                    backgroundColor: 'rgba(153, 102, 255, 0.2)',
-                    borderColor: 'rgba(153, 102, 255, 1)',
-                    borderWidth: 1
-                }]
-            },
-            options: { responsive: true, scales: { y: { beginAtZero: true, max: 100 } } }
-        });
-    }
-
-    // Confidence Chart
-    const confidenceCtx = document.getElementById("confidenceChart");
-    if (confidenceCtx) {
-        confidenceChart = new Chart(confidenceCtx, {
-            type: 'doughnut',
-            data: {
-                labels: ['Correct', 'Unsure', 'Incorrect'],
-                datasets: [{
-                    label: 'Pronunciation Confidence Level',
-                    data: data.confidence,
-                    backgroundColor: ['rgba(75, 192, 192, 0.2)', 'rgba(255, 159, 64, 0.2)', 'rgba(255, 99, 132, 0.2)'],
-                    borderColor: ['rgba(75, 192, 192, 1)', 'rgba(255, 159, 64, 1)', 'rgba(255, 99, 132, 1)'],
-                    borderWidth: 1
-                }]
-            },
-            options: { responsive: true }
-        });
-    }
-
-    // Accuracy by Syllables Chart
-    const syllablesCtx = document.getElementById("syllablesChart");
-    if (syllablesCtx) {
-        accuracyBySyllablesChart = new Chart(syllablesCtx, {
-            type: 'line',
-            data: {
-                labels: ['Syllable 1', 'Syllable 2', 'Syllable 3', 'Syllable 4'],
-                datasets: [{
-                    label: 'Accuracy by Syllables',
-                    data: data.syllables,
-                    backgroundColor: 'rgba(255, 205, 86, 0.2)',
-                    borderColor: 'rgba(255, 205, 86, 1)',
-                    borderWidth: 1
-                }]
-            },
-            options: { responsive: true }
-        });
-    }
-
-    // Accuracy by Sound Location Chart
-    const soundLocationCtx = document.getElementById("soundLocationChart");
-    if (soundLocationCtx) {
-        accuracyBySoundLocationChart = new Chart(soundLocationCtx, {
-            type: 'radar',
-            data: {
-                labels: ['Beginning', 'Middle', 'End'],
-                datasets: [{
-                    label: 'Accuracy by Sound Location',
-                    data: data.soundLocation,
-                    backgroundColor: 'rgba(201, 203, 207, 0.2)',
-                    borderColor: 'rgba(201, 203, 207, 1)',
-                    borderWidth: 1
-                }]
-            },
-            options: { responsive: true, scales: { r: { beginAtZero: true, max: 100 } } }
-        });
-        const minutesPracticedCtx = document.getElementById("minutesPracticedChart");
-        if (minutesPracticedCtx) {
-            minutesPracticedChart = new Chart(minutesPracticedCtx, {
-                type: 'bar',
-                data: {
-                    labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4'],
-                    datasets: [{
-                        label: 'Minutes Practiced',
-                        data: data.minutesPracticed,
-                        backgroundColor: 'rgba(255, 159, 64, 0.2)',
-                        borderColor: 'rgba(255, 159, 64, 1)',
-                        borderWidth: 1
-                    }]
-                },
-                options: { responsive: true, scales: { y: { beginAtZero: true } } }
-            });
+// Initialize charts when the page loads
+document.addEventListener('DOMContentLoaded', () => {
+    createCharts();
+    
+    // Add event listener for student dropdown
+    const studentDropdown = document.getElementById('studentDropdown');
+    studentDropdown.addEventListener('change', (e) => {
+        if (e.target.value && e.target.value !== 'add') {
+            updateChartsForStudent(e.target.value);
         }
-    }
+    });
+});
+
+function createCharts() {
+    // Total Accuracy Pie Chart
+    charts.totalAccuracy = new Chart(document.getElementById('totalAccuracyChart'), {
+        type: 'pie',
+        data: {
+            labels: [],
+            datasets: [{
+                label: 'Accuracy (%)',
+                data: [],
+                backgroundColor: [
+                    'rgb(75, 192, 192)',
+                    'rgb(255, 99, 132)',
+                    'rgb(255, 206, 86)'
+                ]
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    position: 'right'
+                }
+            }
+        }
+    });
+
+    // Sound Accuracy Bar Chart
+    charts.soundAccuracy = new Chart(document.getElementById('soundAccuracyChart'), {
+        type: 'bar',
+        data: {
+            labels: [],
+            datasets: [{
+                label: 'Accuracy (%)',
+                data: [],
+                backgroundColor: 'rgb(54, 162, 235)'
+            }]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    max: 100
+                }
+            }
+        }
+    });
+
+    // Location Accuracy Bar Chart
+    charts.locationAccuracy = new Chart(document.getElementById('locationAccuracyChart'), {
+        type: 'bar',
+        data: {
+            labels: [],
+            datasets: [{
+                label: 'Accuracy (%)',
+                data: [],
+                backgroundColor: 'rgb(153, 102, 255)'
+            }]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    max: 100
+                }
+            }
+        }
+    });
+
+    // Similar pattern for other charts...
+    // Word Accuracy Pie Chart
+    charts.wordAccuracy = new Chart(document.getElementById('wordAccuracyChart'), {
+        type: 'pie',
+        data: {
+            labels: [],
+            datasets: [{
+                data: [],
+                backgroundColor: [
+                    'rgb(75, 192, 192)',
+                    'rgb(255, 99, 132)',
+                    'rgb(255, 206, 86)'
+                ]
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    position: 'right'
+                }
+            }
+        }
+    });
+
+    // Minutes Practiced Line Chart
+    charts.minutesPracticed = new Chart(document.getElementById('minutesPracticedChart'), {
+        type: 'line',
+        data: {
+            labels: [],
+            datasets: [{
+                label: 'Minutes',
+                data: [],
+                borderColor: 'rgb(75, 192, 192)',
+                tension: 0.1
+            }]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+
+    // Progress Charts
+    charts.weeklyProgress = new Chart(document.getElementById('weeklyProgressChart'), {
+        type: 'line',
+        data: {
+            labels: [],
+            datasets: [{
+                label: 'Progress (%)',
+                data: [],
+                borderColor: 'rgb(153, 102, 255)',
+                tension: 0.1
+            }]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    max: 100
+                }
+            }
+        }
+    });
+
+    charts.monthlyProgress = new Chart(document.getElementById('monthlyProgressChart'), {
+        type: 'line',
+        data: {
+            labels: [],
+            datasets: [{
+                label: 'Progress (%)',
+                data: [],
+                borderColor: 'rgb(255, 99, 132)',
+                tension: 0.1
+            }]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    max: 100
+                }
+            }
+        }
+    });
 }
 
-function selectStudent(studentName) {
-    if (!studentName || !studentData[studentName]) return;
+function updateChartsForStudent(studentName) {
+    const studentData = studentMetrics[studentName];
+    if (!studentData) return;
 
-    const data = studentData[studentName];
+    // Update Total Accuracy Chart
+    updateChartData(charts.totalAccuracy, studentData.totalAccuracy.labels, studentData.totalAccuracy.data);
 
-    // Update Accuracy Over Time chart
-    if (accuracyTimeChart) {
-        accuracyTimeChart.data.datasets[0].data = data.accuracyTime;
-        accuracyTimeChart.update();
-    }
+    // Update Sound Accuracy Chart
+    updateChartData(charts.soundAccuracy, studentData.soundAccuracy.labels, studentData.soundAccuracy.data);
 
-    // Update Letter Combination chart
-    if (letterCombinationChart) {
-        letterCombinationChart.data.datasets[0].data = data.letterCombination[selectedSound];
-        letterCombinationChart.update();
-    }
+    // Update Location Accuracy Chart
+    updateChartData(charts.locationAccuracy, studentData.locationAccuracy.labels, studentData.locationAccuracy.data);
 
-    // Update Game Level chart
-    if (gameLevelChart) {
-        gameLevelChart.data.datasets[0].data = data.gameLevels;
-        gameLevelChart.update();
-    }
-
-    // Update Pronunciation Confidence chart
-    if (confidenceChart) {
-        confidenceChart.data.datasets[0].data = data.confidence;
-        confidenceChart.update();
-    }
-
-    // Update Accuracy by Syllables chart
-    if (accuracyBySyllablesChart) {
-        accuracyBySyllablesChart.data.datasets[0].data = data.syllables;
-        accuracyBySyllablesChart.update();
-    }
-
-    // Update Accuracy by Sound Location chart
-    if (accuracyBySoundLocationChart) {
-        accuracyBySoundLocationChart.data.datasets[0].data = data.soundLocation;
-        accuracyBySoundLocationChart.update();
-    }
-
-    // Update Minutes Practiced chart
-    if (minutesPracticedChart) {
-        minutesPracticedChart.data.datasets[0].data = data.minutesPracticed;
-        minutesPracticedChart.update();
-    }
+    // Update all other charts similarly
+    updateChartData(charts.syllableCountAccuracy, studentData.syllableCountAccuracy.labels, studentData.syllableCountAccuracy.data);
+    updateChartData(charts.syllableShapeOpenClosed, studentData.syllableShapeOpenClosed.labels, studentData.syllableShapeOpenClosed.data);
+    updateChartData(charts.syllableShapeVCVCVC, studentData.syllableShapeVCVCVC.labels, studentData.syllableShapeVCVCVC.data);
+    updateChartData(charts.wordAccuracy, studentData.wordAccuracy.labels, studentData.wordAccuracy.data);
+    updateChartData(charts.minutesPracticed, studentData.minutesPracticed.labels, studentData.minutesPracticed.data);
+    updateChartData(charts.weeklyProgress, studentData.weeklyProgress.labels, studentData.weeklyProgress.data);
+    updateChartData(charts.monthlyProgress, studentData.monthlyProgress.labels, studentData.monthlyProgress.data);
 }
 
-// Call loadCharts() initially to load the first student's data on page load
-document.addEventListener("DOMContentLoaded", loadCharts);
-
-// Call loadCharts on page load
-window.onload = loadCharts;
-*/
+function updateChartData(chart, labels, data) {
+    chart.data.labels = labels;
+    chart.data.datasets[0].data = data;
+    chart.update();
+}

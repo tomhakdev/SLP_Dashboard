@@ -30,7 +30,7 @@ const studentData = {
         goals: "K becomes T and T becomes G",
         parentContact: "Jane Smith, 987-654-3210",
         specialRequests: "Prefer visual aids during sessions.",
-        selectedSounds: ["th"],
+        selectedSounds: ["k", "t", "g"],
         sliderValues: {
             soundLocation: [5, 0, 95], 
             syllableCount: [30, 50, 20],
