@@ -192,19 +192,26 @@ function createCharts() {
     const syllableShapeOpenClosedChart = document.getElementById('syllableShapeOpenClosedChart');
     if (syllableShapeOpenClosedChart) {
         charts.syllableShapeOpenClosed = new Chart(syllableShapeOpenClosedChart, {
-            type: 'pie',
+            type: 'bar',
             data: {
                 labels: [],
                 datasets: [{
+                    label: 'Accuracy (%)',
                     data: [],
                     backgroundColor: ['rgb(255, 99, 132)', 'rgb(54, 162, 235)']
                 }]
             },
             options: {
                 responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        max: 100
+                    }
+                },
                 plugins: {
                     legend: {
-                        position: 'right'
+                        display: false
                     }
                 }
             }
@@ -214,19 +221,26 @@ function createCharts() {
     const syllableShapeVCVCVCChart = document.getElementById('syllableShapeVCVCVCChart');
     if (syllableShapeVCVCVCChart) {
         charts.syllableShapeVCVCVC = new Chart(syllableShapeVCVCVCChart, {
-            type: 'pie',
+            type: 'bar',
             data: {
                 labels: [],
                 datasets: [{
+                    label: 'Accuracy (%)',
                     data: [],
                     backgroundColor: ['rgb(75, 192, 192)', 'rgb(153, 102, 255)']
                 }]
             },
             options: {
                 responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        max: 100
+                    }
+                },
                 plugins: {
                     legend: {
-                        position: 'right'
+                        display: false
                     }
                 }
             }

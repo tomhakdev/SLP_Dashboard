@@ -28,8 +28,8 @@ const studentData = {
         dob: "2015-08-20",
         gender: "Male",
         goals: "K becomes T and T becomes G",
-        parentContact: "Jane Smith, 987-654-3210",
-        specialRequests: "Prefer visual aids during sessions.",
+        parentContact: "Arlo Joey, 987-654-3210",
+        specialRequests: "Slow learner- requires visual aids during sessions.",
         selectedSounds: ["k", "t", "g"],
         sliderValues: {
             soundLocation: [5, 0, 95], 
