@@ -146,204 +146,302 @@ let charts = {
 // Initialize charts when the page loads
 document.addEventListener('DOMContentLoaded', () => {
     createCharts();
+    toggleChartsVisibility(false);
     
     // Add event listener for student dropdown
     const studentDropdown = document.getElementById('studentDropdown');
-    studentDropdown.addEventListener('change', (e) => {
-        if (e.target.value && e.target.value !== 'add') {
-            updateChartsForStudent(e.target.value);
-        }
-    });
+    if (studentDropdown) {
+        studentDropdown.addEventListener('change', (e) => {
+            if (e.target.value && e.target.value !== 'add') {
+                updateChartsForStudent(e.target.value);
+                toggleChartsVisibility(true);
+            } else{
+                toggleChartsVisibility(false);
+            }
+        });
+    }
 });
 
 function createCharts() {
-    // Total Accuracy Pie Chart
-    charts.totalAccuracy = new Chart(document.getElementById('totalAccuracyChart'), {
-        type: 'pie',
-        data: {
-            labels: [],
-            datasets: [{
-                label: 'Accuracy (%)',
-                data: [],
-                backgroundColor: [
-                    'rgb(75, 192, 192)',
-                    'rgb(255, 99, 132)',
-                    'rgb(255, 206, 86)'
-                ]
-            }]
-        },
-        options: {
-            responsive: true,
-            plugins: {
-                legend: {
-                    position: 'right'
+    // Initialize syllable count accuracy chart
+    const syllableCountChart = document.getElementById('syllableCountAccuracyChart');
+    if (syllableCountChart) {
+        charts.syllableCountAccuracy = new Chart(syllableCountChart, {
+            type: 'bar',
+            data: {
+                labels: [],
+                datasets: [{
+                    label: 'Accuracy (%)',
+                    data: [],
+                    backgroundColor: 'rgb(255, 159, 64)'
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        max: 100
+                    }
                 }
             }
-        }
-    });
+        });
+    }
+
+    // Initialize syllable shape charts
+    const syllableShapeOpenClosedChart = document.getElementById('syllableShapeOpenClosedChart');
+    if (syllableShapeOpenClosedChart) {
+        charts.syllableShapeOpenClosed = new Chart(syllableShapeOpenClosedChart, {
+            type: 'pie',
+            data: {
+                labels: [],
+                datasets: [{
+                    data: [],
+                    backgroundColor: ['rgb(255, 99, 132)', 'rgb(54, 162, 235)']
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'right'
+                    }
+                }
+            }
+        });
+    }
+
+    const syllableShapeVCVCVCChart = document.getElementById('syllableShapeVCVCVCChart');
+    if (syllableShapeVCVCVCChart) {
+        charts.syllableShapeVCVCVC = new Chart(syllableShapeVCVCVCChart, {
+            type: 'pie',
+            data: {
+                labels: [],
+                datasets: [{
+                    data: [],
+                    backgroundColor: ['rgb(75, 192, 192)', 'rgb(153, 102, 255)']
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'right'
+                    }
+                }
+            }
+        });
+    }
+
+    // Total Accuracy Pie Chart
+    const totalAccuracyChart = document.getElementById('totalAccuracyChart');
+    if (totalAccuracyChart) {
+        charts.totalAccuracy = new Chart(totalAccuracyChart, {
+            type: 'pie',
+            data: {
+                labels: [],
+                datasets: [{
+                    label: 'Accuracy (%)',
+                    data: [],
+                    backgroundColor: [
+                        'rgb(75, 192, 192)',
+                        'rgb(255, 99, 132)',
+                        'rgb(255, 206, 86)'
+                    ]
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'right'
+                    }
+                }
+            }
+        });
+    }
 
     // Sound Accuracy Bar Chart
-    charts.soundAccuracy = new Chart(document.getElementById('soundAccuracyChart'), {
-        type: 'bar',
-        data: {
-            labels: [],
-            datasets: [{
-                label: 'Accuracy (%)',
-                data: [],
-                backgroundColor: 'rgb(54, 162, 235)'
-            }]
-        },
-        options: {
-            responsive: true,
-            scales: {
-                y: {
-                    beginAtZero: true,
-                    max: 100
+    const soundAccuracyChart = document.getElementById('soundAccuracyChart');
+    if (soundAccuracyChart) {
+        charts.soundAccuracy = new Chart(soundAccuracyChart, {
+            type: 'bar',
+            data: {
+                labels: [],
+                datasets: [{
+                    label: 'Accuracy (%)',
+                    data: [],
+                    backgroundColor: 'rgb(54, 162, 235)'
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        max: 100
+                    }
                 }
             }
-        }
-    });
+        });
+    }
 
     // Location Accuracy Bar Chart
-    charts.locationAccuracy = new Chart(document.getElementById('locationAccuracyChart'), {
-        type: 'bar',
-        data: {
-            labels: [],
-            datasets: [{
-                label: 'Accuracy (%)',
-                data: [],
-                backgroundColor: 'rgb(153, 102, 255)'
-            }]
-        },
-        options: {
-            responsive: true,
-            scales: {
-                y: {
-                    beginAtZero: true,
-                    max: 100
+    const locationAccuracyChart = document.getElementById('locationAccuracyChart');
+    if (locationAccuracyChart) {
+        charts.locationAccuracy = new Chart(locationAccuracyChart, {
+            type: 'bar',
+            data: {
+                labels: [],
+                datasets: [{
+                    label: 'Accuracy (%)',
+                    data: [],
+                    backgroundColor: 'rgb(153, 102, 255)'
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        max: 100
+                    }
                 }
             }
-        }
-    });
+        });
+    }
 
-    // Similar pattern for other charts...
     // Word Accuracy Pie Chart
-    charts.wordAccuracy = new Chart(document.getElementById('wordAccuracyChart'), {
-        type: 'pie',
-        data: {
-            labels: [],
-            datasets: [{
-                data: [],
-                backgroundColor: [
-                    'rgb(75, 192, 192)',
-                    'rgb(255, 99, 132)',
-                    'rgb(255, 206, 86)'
-                ]
-            }]
-        },
-        options: {
-            responsive: true,
-            plugins: {
-                legend: {
-                    position: 'right'
+    const wordAccuracyChart = document.getElementById('wordAccuracyChart');
+    if (wordAccuracyChart) {
+        charts.wordAccuracy = new Chart(wordAccuracyChart, {
+            type: 'pie',
+            data: {
+                labels: [],
+                datasets: [{
+                    data: [],
+                    backgroundColor: [
+                        'rgb(75, 192, 192)',
+                        'rgb(255, 99, 132)',
+                        'rgb(255, 206, 86)'
+                    ]
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'right'
+                    }
                 }
             }
-        }
-    });
+        });
+    }
 
     // Minutes Practiced Line Chart
-    charts.minutesPracticed = new Chart(document.getElementById('minutesPracticedChart'), {
-        type: 'line',
-        data: {
-            labels: [],
-            datasets: [{
-                label: 'Minutes',
-                data: [],
-                borderColor: 'rgb(75, 192, 192)',
-                tension: 0.1
-            }]
-        },
-        options: {
-            responsive: true,
-            scales: {
-                y: {
-                    beginAtZero: true
+    const minutesPracticedChart = document.getElementById('minutesPracticedChart');
+    if (minutesPracticedChart) {
+        charts.minutesPracticed = new Chart(minutesPracticedChart, {
+            type: 'line',
+            data: {
+                labels: [],
+                datasets: [{
+                    label: 'Minutes',
+                    data: [],
+                    borderColor: 'rgb(75, 192, 192)',
+                    tension: 0.1
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
                 }
             }
-        }
-    });
+        });
+    }
 
-    // Progress Charts
-    charts.weeklyProgress = new Chart(document.getElementById('weeklyProgressChart'), {
-        type: 'line',
-        data: {
-            labels: [],
-            datasets: [{
-                label: 'Progress (%)',
-                data: [],
-                borderColor: 'rgb(153, 102, 255)',
-                tension: 0.1
-            }]
-        },
-        options: {
-            responsive: true,
-            scales: {
-                y: {
-                    beginAtZero: true,
-                    max: 100
+    // Weekly Progress Chart
+    const weeklyProgressChart = document.getElementById('weeklyProgressChart');
+    if (weeklyProgressChart) {
+        charts.weeklyProgress = new Chart(weeklyProgressChart, {
+            type: 'line',
+            data: {
+                labels: [],
+                datasets: [{
+                    label: 'Progress (%)',
+                    data: [],
+                    borderColor: 'rgb(153, 102, 255)',
+                    tension: 0.1
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        max: 100
+                    }
                 }
             }
-        }
-    });
+        });
+    }
 
-    charts.monthlyProgress = new Chart(document.getElementById('monthlyProgressChart'), {
-        type: 'line',
-        data: {
-            labels: [],
-            datasets: [{
-                label: 'Progress (%)',
-                data: [],
-                borderColor: 'rgb(255, 99, 132)',
-                tension: 0.1
-            }]
-        },
-        options: {
-            responsive: true,
-            scales: {
-                y: {
-                    beginAtZero: true,
-                    max: 100
+    // Monthly Progress Chart
+    const monthlyProgressChart = document.getElementById('monthlyProgressChart');
+    if (monthlyProgressChart) {
+        charts.monthlyProgress = new Chart(monthlyProgressChart, {
+            type: 'line',
+            data: {
+                labels: [],
+                datasets: [{
+                    label: 'Progress (%)',
+                    data: [],
+                    borderColor: 'rgb(255, 99, 132)',
+                    tension: 0.1
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        max: 100
+                    }
                 }
             }
-        }
-    });
+        });
+    }
 }
 
 function updateChartsForStudent(studentName) {
     const studentData = studentMetrics[studentName];
-    if (!studentData) return;
+    if (!studentData) {
+        toggleChartsVisibility(false);
+        return;
+    }
 
-    // Update Total Accuracy Chart
-    updateChartData(charts.totalAccuracy, studentData.totalAccuracy.labels, studentData.totalAccuracy.data);
-
-    // Update Sound Accuracy Chart
-    updateChartData(charts.soundAccuracy, studentData.soundAccuracy.labels, studentData.soundAccuracy.data);
-
-    // Update Location Accuracy Chart
-    updateChartData(charts.locationAccuracy, studentData.locationAccuracy.labels, studentData.locationAccuracy.data);
-
-    // Update all other charts similarly
-    updateChartData(charts.syllableCountAccuracy, studentData.syllableCountAccuracy.labels, studentData.syllableCountAccuracy.data);
-    updateChartData(charts.syllableShapeOpenClosed, studentData.syllableShapeOpenClosed.labels, studentData.syllableShapeOpenClosed.data);
-    updateChartData(charts.syllableShapeVCVCVC, studentData.syllableShapeVCVCVC.labels, studentData.syllableShapeVCVCVC.data);
-    updateChartData(charts.wordAccuracy, studentData.wordAccuracy.labels, studentData.wordAccuracy.data);
-    updateChartData(charts.minutesPracticed, studentData.minutesPracticed.labels, studentData.minutesPracticed.data);
-    updateChartData(charts.weeklyProgress, studentData.weeklyProgress.labels, studentData.weeklyProgress.data);
-    updateChartData(charts.monthlyProgress, studentData.monthlyProgress.labels, studentData.monthlyProgress.data);
+    // Update each chart only if it exists
+    Object.keys(charts).forEach(chartKey => {
+        if (charts[chartKey] && studentData[chartKey]) {
+            updateChartData(charts[chartKey], studentData[chartKey].labels, studentData[chartKey].data);
+        }
+    });
 }
 
 function updateChartData(chart, labels, data) {
-    chart.data.labels = labels;
-    chart.data.datasets[0].data = data;
-    chart.update();
+    if (chart && chart.data) {
+        chart.data.labels = labels;
+        chart.data.datasets[0].data = data;
+        chart.update();
+    }
+}
+
+function toggleChartsVisibility(show) {
+    const chartItems = document.querySelectorAll('.chart-item');
+    chartItems.forEach(item => {
+        item.style.display = show ? 'block' : 'none';
+    });
 }
