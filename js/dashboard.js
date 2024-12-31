@@ -1,6 +1,17 @@
 // Enhanced mock data for student performance metrics
 const studentMetrics = {
     Tom: {
+        otherStatistics: {
+            minutesPracticed: 400,
+            dailyAverage: 50,
+            dateStarted: "2023-01-10",
+            loginStreak: 15,
+            wordsAttempted: 500,
+            wordsMastered: 300,
+            practicedWords: "apple, banana, cherry",
+            highInaccuracyWords: "pear, pineapple",
+            accuracyPercentage: "90%"
+        },
         totalAccuracy: {
             labels: ['Correct', 'Incorrect', 'Unsure'],
             data: [75, 15, 10]
@@ -43,6 +54,17 @@ const studentMetrics = {
         }
     },
     Simon: {
+        otherStatistics: {
+            minutesPracticed: 300,
+            dailyAverage: 30,
+            dateStarted: "2023-02-15",
+            loginStreak: 7,
+            wordsAttempted: 400,
+            wordsMastered: 250,
+            practicedWords: "dog, cat, fish",
+            highInaccuracyWords: "elephant, lion",
+            accuracyPercentage: "75%"
+        },
         totalAccuracy: {
             labels: ['Correct', 'Incorrect', 'Unsure'],
             data: [15, 70, 15]
@@ -85,6 +107,17 @@ const studentMetrics = {
         }
     },
     Yingel: {
+        otherStatistics: {
+            minutesPracticed: 500,
+            dailyAverage: 45,
+            dateStarted: "2023-03-01",
+            loginStreak: 20,
+            wordsAttempted: 600,
+            wordsMastered: 400,
+            practicedWords: "grape, orange, lemon",
+            highInaccuracyWords: "watermelon, kiwi",
+            accuracyPercentage: "85%"
+        },
         totalAccuracy: {
             labels: ['Correct', 'Incorrect', 'Unsure'],
             data: [55, 20, 25]
@@ -154,6 +187,7 @@ document.addEventListener('DOMContentLoaded', () => {
         studentDropdown.addEventListener('change', (e) => {
             if (e.target.value && e.target.value !== 'add') {
                 updateChartsForStudent(e.target.value);
+                updateOtherStatistics(e.target.value);
                 toggleChartsVisibility(true);
             } else{
                 toggleChartsVisibility(false);
@@ -454,8 +488,24 @@ function updateChartData(chart, labels, data) {
 }
 
 function toggleChartsVisibility(show) {
-    const chartItems = document.querySelectorAll('.chart-item');
+    const chartItems = document.querySelectorAll('.chart-item, .other-statistics');
     chartItems.forEach(item => {
         item.style.display = show ? 'block' : 'none';
     });
+}
+
+
+function updateOtherStatistics(studentName) {
+    const stats = studentMetrics[studentName]?.otherStatistics;
+    if (!stats) return;
+
+    document.getElementById("minutesPracticed").innerText = stats.minutesPracticed || "N/A";
+    document.getElementById("dailyAverage").innerText = stats.dailyAverage || "N/A";
+    document.getElementById("dateStarted").innerText = stats.dateStarted || "N/A";
+    document.getElementById("loginStreak").innerText = stats.loginStreak || "N/A";
+    document.getElementById("wordsAttempted").innerText = stats.wordsAttempted || "N/A";
+    document.getElementById("wordsMastered").innerText = stats.wordsMastered || "N/A";
+    document.getElementById("practicedWords").innerText = stats.practicedWords || "N/A";
+    document.getElementById("highInaccuracyWords").innerText = stats.highInaccuracyWords || "N/A";
+    document.getElementById("accuracyPercentage").innerText = stats.accuracyPercentage || "N/A";
 }
