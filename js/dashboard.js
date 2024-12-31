@@ -2,15 +2,15 @@
 const studentMetrics = {
     Tom: {
         otherStatistics: {
-            minutesPracticed: 400,
-            dailyAverage: 50,
+            minutesPracticed: 325,
+            dailyAverage: 12,
             dateStarted: "2023-01-10",
             loginStreak: 15,
-            wordsAttempted: 500,
-            wordsMastered: 300,
-            practicedWords: "apple, banana, cherry",
-            highInaccuracyWords: "pear, pineapple",
-            accuracyPercentage: "90%"
+            wordsAttempted: 222,
+            wordsMastered: 54,
+            practicedWords: "rose, scooter, resting",
+            highInaccuracyWords: "rice, supper",
+            accuracyPercentage: "87%"
         },
         totalAccuracy: {
             labels: ['Correct', 'Incorrect', 'Unsure'],
@@ -55,15 +55,15 @@ const studentMetrics = {
     },
     Simon: {
         otherStatistics: {
-            minutesPracticed: 300,
-            dailyAverage: 30,
+            minutesPracticed: 521,
+            dailyAverage: 33,
             dateStarted: "2023-02-15",
             loginStreak: 7,
-            wordsAttempted: 400,
-            wordsMastered: 250,
-            practicedWords: "dog, cat, fish",
-            highInaccuracyWords: "elephant, lion",
-            accuracyPercentage: "75%"
+            wordsAttempted: 678,
+            wordsMastered: 3,
+            practicedWords: "bat, sat, great",
+            highInaccuracyWords: "gallop, glow",
+            accuracyPercentage: "64%"
         },
         totalAccuracy: {
             labels: ['Correct', 'Incorrect', 'Unsure'],
@@ -108,15 +108,15 @@ const studentMetrics = {
     },
     Yingel: {
         otherStatistics: {
-            minutesPracticed: 500,
-            dailyAverage: 45,
+            minutesPracticed: 468,
+            dailyAverage: 22,
             dateStarted: "2023-03-01",
             loginStreak: 20,
-            wordsAttempted: 600,
-            wordsMastered: 400,
-            practicedWords: "grape, orange, lemon",
-            highInaccuracyWords: "watermelon, kiwi",
-            accuracyPercentage: "85%"
+            wordsAttempted: 443,
+            wordsMastered: 37,
+            practicedWords: "house, orange, choose",
+            highInaccuracyWords: "orangutan, kite",
+            accuracyPercentage: "77%"
         },
         totalAccuracy: {
             labels: ['Correct', 'Incorrect', 'Unsure'],
