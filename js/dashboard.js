@@ -36,9 +36,27 @@ const studentMetrics = {
             labels: ['VCV', 'CVC'],
             data: [90, 80]
         },
-        wordAccuracy: {
-            labels: ['Correct', 'Incorrect', 'Unsure'],
-            data: [90, 5, 5]
+        wordAccuracyByWord: {
+            'rose': {
+                labels: ['Correct', 'Incorrect', 'Unsure'],
+                data: [85, 10, 5]
+            },
+            'soup': {
+                labels: ['Correct', 'Incorrect', 'Unsure'],
+                data: [60, 25, 15]
+            },
+            'rat': {
+                labels: ['Correct', 'Incorrect', 'Unsure'],
+                data: [40, 40, 20]
+            },
+            'rice': {
+                labels: ['Correct', 'Incorrect', 'Unsure'],
+                data: [10, 60, 30]
+            },
+            'sip': {
+                labels: ['Correct', 'Incorrect', 'Unsure'],
+                data: [25, 60, 15]
+            },
         },
         minutesPracticed: {
             labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4'],
@@ -89,9 +107,27 @@ const studentMetrics = {
             labels: ['VCV', 'CVC'],
             data: [15, 90]
         },
-        wordAccuracy: {
-            labels: ['Correct', 'Incorrect', 'Unsure'],
-            data: [40, 20, 40]
+        wordAccuracyByWord: {
+            'cat': {
+                labels: ['Correct', 'Incorrect', 'Unsure'],
+                data: [25, 45, 30]
+            },
+            'kite': {
+                labels: ['Correct', 'Incorrect', 'Unsure'],
+                data: [70, 20, 10]
+            },
+            'gate': {
+                labels: ['Correct', 'Incorrect', 'Unsure'],
+                data: [60, 25, 15]
+            },
+            'bat': {
+                labels: ['Correct', 'Incorrect', 'Unsure'],
+                data: [40, 20, 40]
+            },
+            'sat': {
+                labels: ['Correct', 'Incorrect', 'Unsure'],
+                data: [25, 15, 60]
+            }
         },
         minutesPracticed: {
             labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4'],
@@ -142,9 +178,31 @@ const studentMetrics = {
             labels: ['VCV', 'CVC'],
             data: [75, 80]
         },
-        wordAccuracy: {
-            labels: ['Correct', 'Incorrect', 'Unsure'],
-            data: [70, 20, 10]
+        wordAccuracyByWord: {
+            'rabbit': {
+                labels: ['Correct', 'Incorrect', 'Unsure'],
+                data: [85, 10, 5]
+            },
+            'banana': {
+                labels: ['Correct', 'Incorrect', 'Unsure'],
+                data: [70, 20, 10]
+            },
+            'lamp': {
+                labels: ['Correct', 'Incorrect', 'Unsure'],
+                data: [60, 25, 15]
+            },
+            'sheep': {
+                labels: ['Correct', 'Incorrect', 'Unsure'],
+                data: [40, 35, 25]
+            },
+            'tiger': {
+                labels: ['Correct', 'Incorrect', 'Unsure'],
+                data: [25, 60, 15]
+            },
+            'apple': {
+                labels: ['Correct', 'Incorrect', 'Unsure'],
+                data: [90, 5, 5]
+            }
         },
         minutesPracticed: {
             labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4'],
@@ -362,29 +420,85 @@ function createCharts() {
     // Word Accuracy Pie Chart
     const wordAccuracyChart = document.getElementById('wordAccuracyChart');
     if (wordAccuracyChart) {
-        charts.wordAccuracy = new Chart(wordAccuracyChart, {
-            type: 'pie',
-            data: {
-                labels: [],
-                datasets: [{
-                    data: [],
-                    backgroundColor: [
-                        'rgb(75, 192, 192)',
-                        'rgb(255, 99, 132)',
-                        'rgb(255, 206, 86)'
-                    ]
-                }]
-            },
-            options: {
-                responsive: true,
-                plugins: {
-                    legend: {
-                        position: 'right'
+    // Create container for dropdown
+    const dropdownContainer = document.createElement('div');
+    dropdownContainer.style.position = 'absolute';
+    dropdownContainer.style.right = '10px';
+    dropdownContainer.style.top = '10px';
+    
+    // Create dropdown
+    const wordSelect = document.createElement('select');
+    wordSelect.className = 'word-select';
+    wordSelect.style.padding = '4px';
+    wordSelect.style.borderRadius = '4px';
+    
+    // Add default option
+    const defaultOption = document.createElement('option');
+    defaultOption.value = '';
+    defaultOption.textContent = 'Select Word';
+    defaultOption.selected = true;
+    wordSelect.appendChild(defaultOption);
+    
+    // Add the dropdown to the container
+    dropdownContainer.appendChild(wordSelect);
+    
+    // Add container to chart's parent
+    wordAccuracyChart.parentElement.style.position = 'relative';
+    wordAccuracyChart.parentElement.appendChild(dropdownContainer);
+
+    // Initialize the chart
+    charts.wordAccuracy = new Chart(wordAccuracyChart, {
+        type: 'pie',
+        data: {
+            labels: ['Correct', 'Incorrect', 'Unsure'],
+            datasets: [{
+                data: [],
+                backgroundColor: [
+                    'rgb(75, 192, 192)',
+                    'rgb(255, 99, 132)',
+                    'rgb(255, 206, 86)'
+                ]
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: true,
+            aspectRatio: 2,  // This will match standard chart proportions
+            plugins: {
+                legend: {
+                    position: 'right',
+                    labels: {
+                        boxWidth: 12,
+                        padding: 15,
+                        font: {
+                            size: 12
+                        },
+                        generateLabels: function(chart) {
+                            // This ensures labels don't get cut off
+                            const labels = Chart.defaults.plugins.legend.labels.generateLabels(chart);
+                            return labels.map(label => {
+                                label.textAlign = 'left';
+                                return label;
+                            });
+                        }
                     }
                 }
             }
-        });
-    }
+        }
+    });
+
+    wordAccuracyChart.style.display = 'none';
+
+    wordAccuracyChart.style.height = '200px';  // Adjust this value to match Total Accuracy chart height
+    wordAccuracyChart.style.width = '100%';
+
+    // Add event listener to dropdown
+    wordSelect.addEventListener('change', function(e) {
+        const selectedWord = e.target.value;
+        const currentStudent = document.getElementById('studentDropdown').value;
+        updateWordAccuracyChart(currentStudent, selectedWord);
+    });
+}
 
     // Minutes Practiced Line Chart
     const minutesPracticedChart = document.getElementById('minutesPracticedChart');
@@ -477,6 +591,25 @@ function updateChartsForStudent(studentName) {
             updateChartData(charts[chartKey], studentData[chartKey].labels, studentData[chartKey].data);
         }
     });
+
+
+    const wordSelect = document.querySelector('.word-select');
+    if (wordSelect) {
+        // Clear existing options except default
+        while (wordSelect.options.length > 1) {
+            wordSelect.remove(1);
+        }
+
+        // Add new options based on student's word data
+        const words = Object.keys(studentData.wordAccuracyByWord || {});
+        words.forEach(word => {
+            const option = document.createElement('option');
+            option.value = word;
+            option.textContent = word;
+            wordSelect.appendChild(option);
+        });
+    }
+
 }
 
 function updateChartData(chart, labels, data) {
@@ -486,6 +619,27 @@ function updateChartData(chart, labels, data) {
         chart.update();
     }
 }
+
+
+function updateWordAccuracyChart(studentName, selectedWord) {
+    const studentData = studentMetrics[studentName];
+    if (!studentData || !charts.wordAccuracy) return;
+
+    if (!selectedWord) {
+        charts.wordAccuracy.canvas.style.display = 'none';
+        return;
+    }
+
+    charts.wordAccuracy.canvas.style.display = 'block';
+
+    const wordData = studentData.wordAccuracyByWord[selectedWord];
+    if (wordData) {
+        charts.wordAccuracy.data.labels = wordData.labels;
+        charts.wordAccuracy.data.datasets[0].data = wordData.data;
+        charts.wordAccuracy.update();
+    }
+}
+
 
 function toggleChartsVisibility(show) {
     const chartItems = document.querySelectorAll('.chart-item, .other-statistics');

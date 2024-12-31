@@ -14,7 +14,7 @@ const studentData = {
             soundLocation: [20, 30, 50], // Initial, medial, final percentages
             syllableCount: [33, 33, 34], // One-syllable, two-syllable, three-syllable percentages
             syllableShapes: [50, 50], // VCV and CVC percentages
-            syllableType: [70, 30], // Open and Closed percentages
+            syllableType: [50, 50], // Open and Closed percentages
         },
         targetWords: ["rose", "soup", "rat", "rice", "sip"], // Max 10 words
         repetitions: {
@@ -34,8 +34,8 @@ const studentData = {
         sliderValues: {
             soundLocation: [5, 0, 95], 
             syllableCount: [30, 50, 20],
-            syllableShapes: [60, 40],
-            syllableType: [40, 60],
+            syllableShapes: [50, 50],
+            syllableType: [50, 50],
         },
         targetWords: ["cat", "kite", "gate", "bat", "sat"],
         repetitions: {
@@ -55,7 +55,7 @@ const studentData = {
         sliderValues: {
             soundLocation: [40, 20, 40], 
             syllableCount: [40, 40, 20],
-            syllableShapes: [70, 30],
+            syllableShapes: [50, 50],
             syllableType: [50, 50],
         },
         targetWords: ["rabbit", "banana", "lamp", "sheep", "tiger", "apple"],
